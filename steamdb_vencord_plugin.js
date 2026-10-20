@@ -1,9 +1,12 @@
 // === VENCORD 24/7 STEAMDB GAME BADGE SPOOFER AUTO-PLUGIN ===
 (function initSteamDbBadgeSpoofer() {
+    console.log("%c[SteamDB Auto-Plugin] Script loaded, initializing...", "color: #38bdf8; font-weight: bold;");
+
     const PLAY_DURATION_MS = 20 * 60 * 1000; // 20 minutes active play
     const REST_DURATION_MS = 2 * 60 * 1000;  // 2 minutes offline break between games
 
     async function start() {
+        // Wait until Vencord Webpack and FluxDispatcher are ready
         while (!window.Vencord?.Webpack?.findStore || !window.Vencord?.Webpack?.Common?.FluxDispatcher) {
             await new Promise(r => setTimeout(r, 1000));
         }
@@ -16,6 +19,7 @@
             return;
         }
 
+        // Shim missing native modules on Linux / Vesktop
         if (!window.DiscordNative) window.DiscordNative = {};
         if (!window.DiscordNative.nativeModules) {
             window.DiscordNative.nativeModules = {
@@ -33,6 +37,8 @@
             utilsMod.getDiscordUtils = () => ({ GetWindowFullscreenTypeByPid: () => 0 });
         }
 
+        // Fetch live real Steam database from Discord detectable API
+        console.log("%c[SteamDB Auto-Plugin] Fetching live Steam catalog...", "color: #eab308; font-weight: bold;");
         let rawCatalog = [];
         try {
             const res = await fetch("/api/v9/applications/detectable");
@@ -169,8 +175,10 @@
             }, REST_DURATION_MS);
         }
 
+        // Start first game immediately
         setGame(pickRandomSteamGame());
 
+        // Global console controls
         window.__badgeSpoofer = {
             next: () => {
                 clearTimeout(activeTimeout);
@@ -192,10 +200,7 @@
         };
     }
 
-    if (document.readyState === "complete") {
-        start();
-    } else {
-        window.addEventListener("load", start);
-    }
+    // Call start() immediately without waiting for window.onload
+    start();
 })();
 // === END VENCORD 24/7 STEAMDB GAME BADGE SPOOFER ===
