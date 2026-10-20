@@ -13,16 +13,20 @@ a simple tool and vencord plugin to help get the new discord game badges (game t
 
 ---
 
-### how to use it in vencord / vesktop (recommended)
+### how to use it in vencord / vesktop
 
-#### 1. automatic install (runs every time vencord opens)
-if you use vesktop on linux, just append the script to your vencord renderer file:
+#### option 1: vencord plugin (recommended)
+1. copy the `vencord-plugin` folder to your vencord source:
 ```bash
-cat steamdb_vencord_plugin.js >> ~/.config/vesktop/sessionData/vencordFiles/vencordDesktopRenderer.js
+cp -r vencord-plugin /path/to/Vencord/src/plugins/steamDbBadgeSpoofer
 ```
-restart or press `ctrl + r` on discord and it will run in the background on startup.
+2. build vencord:
+```bash
+pnpm build
+```
+3. restart or reload discord (`ctrl + r`). it will show up in vencord settings > plugins and run automatically!
 
-#### 2. or just paste it in console
+#### option 2: quick console paste (no building needed)
 1. press `ctrl + shift + i` in discord / vesktop to open console.
 2. type `allow pasting` and press enter if asked.
 3. copy everything inside `steamdb_vencord_plugin.js` and paste it.
@@ -35,6 +39,9 @@ open console (`ctrl + shift + i`) anytime to control it:
 - `window.__badgeSpoofer.current()` — see what game is playing and its steamdb link
 - `window.__badgeSpoofer.pause()` — take a 2-minute break right now
 - `window.__badgeSpoofer.stop()` — stop the spoofer
+
+or use the discord chat command:
+- `/spoofer` — check current status and games history
 
 ---
 
