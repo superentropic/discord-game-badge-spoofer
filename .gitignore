@@ -1,0 +1,8 @@
+data/vencord_daemon.pid
+data/vencord_daemon.log
+data/vencord_daemon_state.json
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+steam_appid.txt
